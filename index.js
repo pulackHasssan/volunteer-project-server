@@ -6,7 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 const admin = require('firebase-admin');
 const serviceAccount = require("./volunteer-auth-c15a3-firebase-adminsdk-pdaum-8598e770a7.json");
 
-
+const port = 4000;
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.acdra.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -21,6 +21,9 @@ admin.initializeApp({
   databaseURL: "https://volunteer-auth-c15a3.firebaseio.com"
 });
 
+app.get('/', (req, res)=>{
+  res.send('hello world')
+})
 
 client.connect(err => {
   const serviceCollection = client.db("volunteer-database").collection("Users");
@@ -78,4 +81,4 @@ client.connect(err => {
 
 
 
-app.listen(4000);
+app.listen(process.env.PORT || port);
